@@ -1,0 +1,33 @@
+<h2>Listing roles</h2>
+<%= if @player_count != @assigned_roles do %>
+  <div class="flash_notice">
+    <div class="row">
+      <p style="text-align:center; color:red">
+        Game cannot start until there are an equal number of players (<%= @player_count %>) and roles (<%= @assigned_roles %>)
+      </p>
+    </div>
+  </div>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Count</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for role <- @roles do %>
+    <tr>
+      <td><%= role.name %></td>
+      <td><%= role.count %></td>
+
+      <td class="text-right">
+        <%= link "Edit", to: role_path(@conn, :edit, role), class: "btn btn-default btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

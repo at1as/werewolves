@@ -7,7 +7,11 @@ defmodule Werewolves.PlayerController do
 
   def index(conn, _params) do
     players = Repo.all(Player)
-    render(conn, "index.html", players: players)
+    player_count = length(players)
+    
+    roles = Repo.all(Werewolves.Role)
+    assigned_roles = Enum.reduce(roles, 0, fn(x, acc) -> x.count + acc end)
+    render(conn, "index.html", players: players, player_count: player_count, assigned_roles: assigned_roles)
   end
 
   def new(conn, _params) do

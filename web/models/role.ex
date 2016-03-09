@@ -1,17 +1,15 @@
-defmodule Werewolves.Player do
+defmodule Werewolves.Role do
   use Werewolves.Web, :model
 
-  schema "players" do
+  schema "roles" do
     field :name, :string
-    field :number, :string
-    field :role, :string
-    field :alive, :boolean
+    field :count, :integer
 
     timestamps
   end
 
-  @required_fields ~w(name number)
-  @optional_fields ~w(role alive)
+  @required_fields ~w(name count)
+  @optional_fields ~w()
 
   @doc """
   Creates a changeset based on the `model` and `params`.

@@ -2,6 +2,7 @@ defmodule Werewolves.PageController do
   use Werewolves.Web, :controller
 
   def index(conn, _params) do
-    render conn, "index.html"
+    players = length(Repo.all(Werewolves.Player))
+    render conn, "index.html", players: players
   end
 end

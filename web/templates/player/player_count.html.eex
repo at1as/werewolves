@@ -1,0 +1,5 @@
+<%= for key <- connection_keys @conn do %>
+ <p><%= key %></p>
+<% end %>
+
+<%= @player_count %>
