@@ -1,11 +1,7 @@
-<h2>Listing roles</h2>
+<h2>Roles</h2>
 <%= if @player_count != @assigned_roles do %>
-  <div class="flash_notice">
-    <div class="row">
-      <p style="text-align:center; color:red">
-        Game cannot start until there are an equal number of players (<%= @player_count %>) and roles (<%= @assigned_roles %>)
-      </p>
-    </div>
+  <div class="alert alert-danger" style="margin-top:20px">
+    Game cannot start until there are an equal number of players (<%= @player_count %>) and roles (<%= @assigned_roles %>)
   </div>
 <% end %>
 
@@ -13,13 +9,13 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Count</th>
+      <th>Number</th>
 
       <th></th>
     </tr>
   </thead>
   <tbody>
-<%= for role <- @roles do %>
+<%= for role <- Enum.sort_by(@roles, fn(x) -> x.name end) do %>
     <tr>
       <td><%= role.name %></td>
       <td><%= role.count %></td>

@@ -8,15 +8,15 @@ defmodule Werewolves.PlayerController do
   def index(conn, _params) do
     players = Repo.all(Player)
     player_count = length(players)
-    
-    roles = Repo.all(Werewolves.Role)
-    assigned_roles = Enum.reduce(roles, 0, fn(x, acc) -> x.count + acc end)
+    assigned_roles = role_count
     render(conn, "index.html", players: players, player_count: player_count, assigned_roles: assigned_roles)
   end
 
   def new(conn, _params) do
     changeset = Player.changeset(%Player{})
-    render(conn, "new.html", changeset: changeset)
+    player_count = player_count
+    assigned_roles = role_count
+    render(conn, "new.html", changeset: changeset, player_count: player_count, assigned_roles: assigned_roles)
   end
 
   def create(conn, %{"player" => player_params}) do
@@ -34,24 +34,29 @@ defmodule Werewolves.PlayerController do
 
   def show(conn, %{"id" => id}) do
     player = Repo.get!(Player, id)
-    render(conn, "show.html", player: player)
+    assigned_roles = role_count
+    render(conn, "show.html", player: player, assigned_roles: assigned_roles)
   end
 
   def edit(conn, %{"id" => id}) do
     player = Repo.get!(Player, id)
+    player_count = player_count
+    assigned_roles = role_count
     changeset = Player.changeset(player)
-    render(conn, "edit.html", player: player, changeset: changeset)
+    render(conn, "edit.html", player: player, changeset: changeset, player_count: player_count, assigned_roles: assigned_roles)
   end
 
   def update(conn, %{"id" => id, "player" => player_params}) do
     player = Repo.get!(Player, id)
     changeset = Player.changeset(player, player_params)
+    player_count = player_count
+    assigned_roles = role_count
 
     case Repo.update(changeset) do
       {:ok, player} ->
         conn
         |> put_flash(:info, "Player updated successfully.")
-        |> redirect(to: player_path(conn, :show, player))
+        |> redirect(to: player_path(conn, :index))
       {:error, changeset} ->
         render(conn, "edit.html", player: player, changeset: changeset)
     end
@@ -67,5 +72,16 @@ defmodule Werewolves.PlayerController do
     conn
     |> put_flash(:info, "Player deleted successfully.")
     |> redirect(to: player_path(conn, :index))
+  end
+
+
+  def role_count do
+    roles = Repo.all(Werewolves.Role)
+    Enum.reduce(roles, 0, fn(x, acc) -> x.count + acc end)
+  end
+
+  def player_count do 
+    players = Repo.all(Player)
+    length(players)
   end
 end

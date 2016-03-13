@@ -1,4 +1,4 @@
-<h2>Listing players</h2>
+<h2>Players</h2>
 
 <table class="table">
   <thead>
@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-<%= for player <- @players do %>
+  <%= for player <- Enum.sort_by(@players, fn(x) -> x.name end) do %>
     <tr>
       <td><%= player.name %></td>
       <td><%= player.number %></td>
@@ -22,7 +22,7 @@
         <%= link "Delete", to: player_path(@conn, :delete, player), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
-<% end %>
+  <% end %>
   </tbody>
 </table>
 

@@ -8,7 +8,7 @@ defmodule Werewolves.RoleController do
   def index(conn, _params) do
     roles = Repo.all(Role)
     player_count = length(Repo.all(Werewolves.Player))
-    assigned_roles = Enum.reduce(roles, 0, fn(x, acc) -> x.count + acc end)
+    assigned_roles = role_count
     render(conn, "index.html", roles: roles, player_count: player_count, assigned_roles: assigned_roles)
   end
 
@@ -37,8 +37,10 @@ defmodule Werewolves.RoleController do
 
   def edit(conn, %{"id" => id}) do
     role = Repo.get!(Role, id)
+    player_count = player_count
+    assigned_roles = role_count
     changeset = Role.changeset(role)
-    render(conn, "edit.html", role: role, changeset: changeset)
+    render(conn, "edit.html", role: role, player_count: player_count, assigned_roles: assigned_roles, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "role" => role_params}) do
@@ -65,5 +67,16 @@ defmodule Werewolves.RoleController do
     conn
     |> put_flash(:info, "Role deleted successfully.")
     |> redirect(to: role_path(conn, :index))
+  end
+  
+
+  def role_count do
+    roles = Repo.all(Werewolves.Role)
+    Enum.reduce(roles, 0, fn(x, acc) -> x.count + acc end)
+  end
+
+  def player_count do 
+    players = Repo.all(Werewolves.Player)
+    length(players)
   end
 end

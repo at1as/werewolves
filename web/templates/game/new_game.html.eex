@@ -1,0 +1,70 @@
+<h3>ALIVE</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Role</th>
+      <th class="text-right">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for player <- Enum.sort_by(@players, fn(x) -> x.name end) do %>
+      <%= if player.alive do %>
+      <tr>
+        <td>
+          <%= player.name %>
+        </td>
+        <td>
+          <%= player.role %>
+        </td>
+        <td class="text-right">
+          <%= link "Kill", to: game_path(@conn, :kill, player), class: "btn btn-default btn-xs" %>
+
+	    <%= if player.entangled do %>          
+	      <span class="btn btn-info btn-xs">Entangled</span>
+	    <% else %>
+	      <%= if @has_cupid do %>          
+		<%= link "Entangle", to: game_path(@conn, :entangle, player), class: "btn btn-default btn-xs" %>
+	      <% end %>
+	    <% end %>
+
+          <%= if @has_little_girl do %>
+            <%= link "Reveal", to: game_path(@conn, :reveal, player), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+
+<h3>DEAD</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Role</th>
+      <th class="text-right">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for player <- Enum.sort_by(@players, fn(x) -> x.name end) do %>
+      <%= if player.alive == false do %>
+      <tr>
+        <td>
+          <%= player.name %>
+        </td>
+        <td>
+          <%= player.role %>
+        </td>
+        <td class="text-right">
+          <%= link "Revive", to: game_path(@conn, :revive, player), class: "btn btn-default btn-xs" %>
+        </td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+

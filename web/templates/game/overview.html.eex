@@ -1,0 +1,10 @@
+<h2>Show game</h2>
+
+<%= if @player_count != @assigned_roles do %>
+  <div class="alert alert-danger" style="margin-top:20px">
+    Game cannot start until there are an equal number of players (<%= @player_count %>) and roles (<%= @assigned_roles %>)
+  </div>
+<% else %>
+  <%= link "Start New Game", to: game_path(@conn, :new) %>
+<% end %>
+

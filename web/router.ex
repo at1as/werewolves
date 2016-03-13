@@ -21,11 +21,17 @@ defmodule Werewolves.Router do
     resources "/players", PlayerController
 
     resources "/roles", RoleController, only: [:index, :update, :edit]
+    
+    resources "/games", GameController
+    get "/overview", GameController, :overview
+    get "/kill/:id", GameController, :kill
+    get "/revive/:id", GameController, :revive
+    get "/reveal/:id", GameController, :reveal
+    get "/entangle/:id", GameController, :entangle
   end
 
   # Other scopes may use custom stacks.
   scope "/api", Werewolves do
     pipe_through :api
-    resources "/players", PlayerController
   end
 end
