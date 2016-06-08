@@ -1,20 +1,22 @@
 # Werewolves
 
-To start your Phoenix app:
+To launch the game, follow the following steps
+
+#### Setup
 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
   * Install Node.js dependencies with `npm install`
-  * Start Phoenix endpoint with `mix phoenix.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+#### Launching server
 
-## Learn more
+To launch the game, three environment variables are required
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: http://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+  * `TWILIO_ACCOUNT_SID` (your twilio account SID)
+  * `TWILIO_AUTH_TOKEN` (your twilio account auth token)
+  * `FROM` (the from number belonging to your account you wish to make outgoing texts with)
+
+
+`TWILIO_ACCOUNT_SID="AC..." TWILIO_AUTH_TOKEN="12345" FROM="+15555555555" mix phoenix server`
+
