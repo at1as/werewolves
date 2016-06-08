@@ -29,7 +29,7 @@
 	    <% end %>
 
           <%= if @has_little_girl do %>
-            <%= link "Reveal", to: game_path(@conn, :reveal, player), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+            <%= link "Reveal", to: game_path(@conn, :reveal, player), data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
           <% end %>
         </td>
       </tr>
